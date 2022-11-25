@@ -1,5 +1,14 @@
-.tab-group{
+.tab-group {
     padding-top: 40px;
-    padding-left: 2%;;
+    padding-left: 2%;
+    ;
     padding-right: 2%;
+}
+
+.fx-layout {
+    padding: 2%;
+}
+
+.div-live {
+    margin: 0.5%;
 }
