@@ -6,9 +6,11 @@
                     <mat-card-title class="mat-card-title-live">
                         <div class="row">
                             <p>
-                                <span style="font-size: 1.3rem;"><b>{{live.liveName}}</b> - </span>
+                                <span style="font-size: 1.3rem;"><b>{{live.liveName}}</b></span>
                                 <span></span>
-                                <span style="font-size: 1rem;">Data: <b>{{live.liveDate}}</b></span>
+                                <mat-chip class="mat-chip-date">
+                                    <span style="font-size: 1rem;">Data: <b>{{live.liveDate | localDateTime}}</b></span>
+                                </mat-chip>
                             </p>
                             <p style="font-size: 1rem;">
                                 Canal: <span>{{live.channelName}}</span>
@@ -33,9 +35,11 @@
                     <mat-card-title class="mat-card-title-live">
                         <div class="row">
                             <p>
-                                <span style="font-size: 1.3rem;"><b>{{live.liveName}}</b> - </span>
+                                <span style="font-size: 1.3rem;"><b>{{live.liveName}}</b></span>
                                 <span></span>
-                                <span style="font-size: 1rem;">Data: <b>{{live.liveDate | localDateTime}}</b></span>
+                                <mat-chip class="mat-chip-date">
+                                    <span style="font-size: 1rem;">Data: <b>{{live.liveDate | localDateTime}}</b></span>
+                                </mat-chip>
                             </p>
                             <p style="font-size: 1rem;">
                                 Canal: <span>{{live.channelName}}</span>
