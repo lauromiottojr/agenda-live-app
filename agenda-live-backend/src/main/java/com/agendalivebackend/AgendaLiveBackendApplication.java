@@ -1,13 +1,13 @@
-package com.spring.agendalive;
+package com.agendalivebackend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AgendaliveApplication {
+public class AgendaLiveBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AgendaliveApplication.class, args);
+		SpringApplication.run(AgendaLiveBackendApplication.class, args);
 	}
 
 }

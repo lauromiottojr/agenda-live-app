@@ -1,9 +1,7 @@
-package com.spring.agendalive.controller;
+package com.agendalivebackend.controller;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,50 +17,52 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.agendalive.document.LiveDocument;
-import com.spring.agendalive.service.LiveService;
+import com.agendalivebackend.model.LiveModel;
+import com.agendalivebackend.service.LiveService;
 
 @CrossOrigin(origins = "*")
 @RestController
+@RequestMapping("/lives")
 public class LiveController {
 
 	@Autowired
 	LiveService liveService;
 
-	@GetMapping("/lives")
-	public ResponseEntity<Page<LiveDocument>> getAllLives(
+	@GetMapping
+	public ResponseEntity<Page<LiveModel>> getAllLives(
 			@PageableDefault(page = 0, size = 10, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
 			@RequestParam(required = false) String flag) {
-		Page<LiveDocument> livePage = liveService.findAll(pageable, flag);
+		Page<LiveModel> livePage = liveService.findAll(pageable, flag);
 		if (livePage.isEmpty()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<Page<LiveDocument>>(livePage, HttpStatus.OK);
+			return new ResponseEntity<Page<LiveModel>>(livePage, HttpStatus.OK);
 		}
 	}
 
-	@GetMapping("/lives/{id}")
-	public ResponseEntity<LiveDocument> getOneLive(@PathVariable(value = "id") String id) {
-		Optional<LiveDocument> liveO = liveService.findById(id);
+	@GetMapping("/{id}")
+	public ResponseEntity<LiveModel> getOneLive(@PathVariable(value = "id") Integer id) {
+		Optional<LiveModel> liveO = liveService.findById(id);
 		if (!liveO.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			return new ResponseEntity<LiveDocument>(liveO.get(), HttpStatus.OK);
+			return new ResponseEntity<LiveModel>(liveO.get(), HttpStatus.OK);
 		}
 	}
 
-	@PostMapping("/lives")
-	public ResponseEntity<LiveDocument> saveLive(@RequestBody @Valid LiveDocument live) {
+	@PostMapping
+	public ResponseEntity<LiveModel> saveLive(@RequestBody LiveModel live) {
 		live.setRegistrationDate(LocalDateTime.now());
-		return new ResponseEntity<LiveDocument>(liveService.save(live), HttpStatus.CREATED);
+		return new ResponseEntity<LiveModel>(liveService.save(live), HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/lives/{id}")
-	public ResponseEntity<?> deleteLive(@PathVariable(value = "id") String id) {
-		Optional<LiveDocument> liveO = liveService.findById(id);
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteLive(@PathVariable(value = "id") Integer id) {
+		Optional<LiveModel> liveO = liveService.findById(id);
 		if (!liveO.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
@@ -71,15 +71,16 @@ public class LiveController {
 		}
 	}
 
-	@PutMapping("/lives/{id}")
-	public ResponseEntity<LiveDocument> updateLive(@PathVariable(value = "id") String id,
-			@RequestBody @Valid LiveDocument liveDocument) {
-		Optional<LiveDocument> liveO = liveService.findById(id);
+	@PutMapping("/{id}")
+	public ResponseEntity<LiveModel> updateLive(@PathVariable(value = "id") Integer id,
+			@RequestBody LiveModel liveModel) {
+		Optional<LiveModel> liveO = liveService.findById(id);
 		if (!liveO.isPresent()) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else {
-			liveDocument.setId(liveO.get().getId());
-			return new ResponseEntity<LiveDocument>(liveService.save(liveDocument), HttpStatus.OK);
+			liveModel.setId(liveO.get().getId());
+			return new ResponseEntity<LiveModel>(liveService.save(liveModel), HttpStatus.OK);
 		}
 	}
+
 }

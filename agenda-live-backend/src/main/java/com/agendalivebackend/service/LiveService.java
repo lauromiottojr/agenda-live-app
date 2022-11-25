@@ -1,4 +1,4 @@
-package com.spring.agendalive.service;
+package com.agendalivebackend.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -8,8 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.spring.agendalive.document.LiveDocument;
-import com.spring.agendalive.repository.LiveRepository;
+import com.agendalivebackend.model.LiveModel;
+import com.agendalivebackend.repository.LiveRepository;
 
 @Service
 public class LiveService {
@@ -17,7 +17,7 @@ public class LiveService {
 	@Autowired
 	LiveRepository liveRepository;
 
-	public Page<LiveDocument> findAll(Pageable pageable, String flag) {
+	public Page<LiveModel> findAll(Pageable pageable, String flag) {
 		if (flag != null && flag.equals("next")) {
 			return liveRepository.findByLiveDateAfterOrderByLiveDateAsc(LocalDateTime.now(), pageable);
 		} else if (flag != null && flag.equals("previous")) {
@@ -27,15 +27,16 @@ public class LiveService {
 		}
 	}
 
-	public Optional<LiveDocument> findById(String id) {
+	public Optional<LiveModel> findById(Integer id) {
 		return liveRepository.findById(id);
 	}
 
-	public LiveDocument save(LiveDocument liveDocument) {
-		return liveRepository.save(liveDocument);
+	public LiveModel save(LiveModel liveModel) {
+		return liveRepository.save(liveModel);
 	}
 
-	public void delete(LiveDocument liveDocument) {
-		liveRepository.delete(liveDocument);
+	public void delete(LiveModel liveModel) {
+		liveRepository.delete(liveModel);
 	}
+
 }
