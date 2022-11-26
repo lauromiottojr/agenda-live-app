@@ -1,6 +1,7 @@
 <mat-tab-group mat-align-tabs="start" class="tab-group">
     <mat-tab label="PRÓXIMAS">
-        <div style="padding: 2%;">
+        <mat-progress-bar mode="indeterminate" *ngIf="!next"></mat-progress-bar>
+        <div style="padding: 2%;" *ngIf="next">
             <ng-container *ngFor="let live of livesNext" style="margin: 0.5%;">
                 <mat-card class="mat-card-live">
                     <mat-card-title class="mat-card-title-live">
@@ -28,8 +29,9 @@
             </ng-container>
         </div>
     </mat-tab>
-    <mat-tab label="REALIZADAS">
-        <div style="padding: 2%;">
+    <mat-tab label="REALIZADAS">        
+        <mat-progress-bar mode="indeterminate" *ngIf="!previous"></mat-progress-bar>
+        <div style="padding: 2%;" *ngIf="previous">
             <ng-container *ngFor="let live of livesPrevious" style="margin: 0.5%;">
                 <mat-card class="mat-card-live">
                     <mat-card-title class="mat-card-title-live">
